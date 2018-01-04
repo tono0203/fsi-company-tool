@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+  "name": "COMPANYツール",
+  "description": "COMPANYの日々承認時にまとめてチェックを入れる機能",
+  "version": "4.0",
+  "icons": {
+    "16": "images/icon/icon_16.png",
+    "48": "images/icon/icon_48.png",
+    "128": "images/icon/icon_128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.honsha.fsi.co.jp/*",
+        "http://www.honsha.fsi.co.jp/*",
+        "https://jinkyuwap.fsi.local/*",
+        "http://jinkyuwap.fsi.local/*",
+        "http://share.fsi.co.jp/*",
+        "https://www.concursolutions.com/*"
+      ],
+      "css": ["css/check.css"],
+      "js": ["js/jquery-3.2.1.min.js", "js/moment.min.js", "js/check.js"]
+    }
+  ],
+  "permissions": [
+    "storage"
+  ],
+  "options_page": "options.html"
+}

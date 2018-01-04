@@ -1,0 +1,15 @@
+{
+  "name": "company-ext",
+  "version": "4.0.0",
+  "description": "COMPANY拡張ツール",
+  "main": "index.js",
+  "scripts": {
+    "build": "jszip -c jszip.json -o dist/%npm_package_version%.zip",
+    "clean": "del dist\\%npm_package_version%.zip"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jszip-cli": "^1.4.24"
+  }
+}

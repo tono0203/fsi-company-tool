@@ -1,6 +1,6 @@
 {
   "name": "company-ext",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "COMPANY拡張ツール",
   "main": "index.js",
   "scripts": {

@@ -57,34 +57,49 @@ $(document).ready(function(){
   // COMPANYにCOPY／PASTE／全部ボタンを追加
   if ($("#KNMTMRNGSTD")[0]){
     $('html').append("<input type='hidden' id='jviuh5o6y6622oHIDDEN'>");
-    $(".PmPanelEntryTimeStateEachRowStyle").each(function(index){
-      $(this).append("<button style='margin-left:10px' id='jviuh5o6y6622oXY-"+index+"' title='実績時間のコピー'>Ｃ</button>");
-      $(this).append("<button id='jviuh5o6y6622oPASTE-"+index+"' title='実績時間の貼り付け'>Ｐ</button>");
-      $(this).append("<button style='margin-left:10px' id='jviuh5o6y6622oJITSU-"+index+"' title='本日の稼働時間を入力'>全</button>");
-      $(document).on("click", "#jviuh5o6y6622oXY-"+index, function(e){
-        var val = {
-          hour: $('#PmDdEntryTimeInputWidget_' + index + 'H').val(),
-          minute: $('#PmDdEntryTimeInputWidget_' + index + 'M').val()
-        }
-        $('#jviuh5o6y6622oHIDDEN').val(JSON.stringify(val));
-      });
-      $(document).on("click", "#jviuh5o6y6622oPASTE-"+index, function(e){
-        var val = $('#jviuh5o6y6622oHIDDEN').val();
-        if (val && 0 < val.length) {
-          var o = JSON.parse(val);
-          $('#PmDdEntryTimeInputWidget_' + index + 'H').val(o.hour);
-          $('#PmDdEntryTimeInputWidget_' + index + 'M').val(o.minute);
-        }
-      });
-      $(document).on("click", "#jviuh5o6y6622oJITSU-"+index, function(e){
-        var hour = $('#JTDMIH').text();
-        var minute = $('#JTDMIM').text();
-        if (hour && minute) {
-          $('#PmDdEntryTimeInputWidget_' + index + 'H').val(hour);
-          $('#PmDdEntryTimeInputWidget_' + index + 'M').val(minute);
-        }
-      });
+    addCpPasteButtons();
+    
+    // DOM要素の変更を監視してコピペボタンの追加をする
+    var observer = new MutationObserver(function (MutationRecords, MutationObserver) {
+      addCpPasteButtons();
+    });
+    observer.observe($('#PM_PANEL_ENTRY_TIME_WIDGET_CONTAINER_AREA').get(0), {
+      childList: true,
     });
   }
   
 });
+
+/**
+ * COMPNAYの日毎入力画面にコピペボタンを追加する
+ */
+function addCpPasteButtons() {
+  $(".PmPanelEntryTimeStateEachRowStyle").each(function(index){
+    $(this).append("<button style='margin-left:10px' id='jviuh5o6y6622oXY-"+index+"' title='実績時間のコピー'>Ｃ</button>");
+    $(this).append("<button id='jviuh5o6y6622oPASTE-"+index+"' title='実績時間の貼り付け'>Ｐ</button>");
+    $(this).append("<button style='margin-left:10px' id='jviuh5o6y6622oJITSU-"+index+"' title='本日の稼働時間を入力'>全</button>");
+    $(document).on("click", "#jviuh5o6y6622oXY-"+index, function(e){
+      var val = {
+        hour: $('#PmDdEntryTimeInputWidget_' + index + 'H').val(),
+        minute: $('#PmDdEntryTimeInputWidget_' + index + 'M').val()
+      }
+      $('#jviuh5o6y6622oHIDDEN').val(JSON.stringify(val));
+    });
+    $(document).on("click", "#jviuh5o6y6622oPASTE-"+index, function(e){
+      var val = $('#jviuh5o6y6622oHIDDEN').val();
+      if (val && 0 < val.length) {
+        var o = JSON.parse(val);
+        $('#PmDdEntryTimeInputWidget_' + index + 'H').val(o.hour);
+        $('#PmDdEntryTimeInputWidget_' + index + 'M').val(o.minute);
+      }
+    });
+    $(document).on("click", "#jviuh5o6y6622oJITSU-"+index, function(e){
+      var hour = $('#JTDMIH').text();
+      var minute = $('#JTDMIM').text();
+      if (hour && minute) {
+        $('#PmDdEntryTimeInputWidget_' + index + 'H').val(hour);
+        $('#PmDdEntryTimeInputWidget_' + index + 'M').val(minute);
+      }
+    });
+  });
+}

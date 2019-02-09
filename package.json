@@ -1,6 +1,6 @@
 {
   "name": "company-ext",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "COMPANY拡張ツール",
   "main": "index.js",
   "scripts": {
@@ -11,5 +11,9 @@
   "license": "ISC",
   "devDependencies": {
     "jszip-cli": "^1.4.24"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "moment": "^2.24.0"
   }
 }

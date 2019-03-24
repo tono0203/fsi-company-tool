@@ -14,8 +14,30 @@ $(document).ready(function () {
     // 実績確認画面にチェック＆確認をつけるボタン
     if ($("#DCMLTAPRV")[0]) {
       $("div.globalnavi")
-        .append("<input type='button' value='チェック＆確認' class='check-button'></input>")
-        .bind("click", function (e) {
+        .append("<input type='button' value='15日までチェック＆確認' class='check-button' id='btn-83947'></input>");
+      $(document).on("click", "#btn-83947", function (e) {
+          var flag = false;
+          $("[id^=BTNDCCOR]").each(function () {
+            var tmp = $(this).attr("id").substr(8);
+            tmp = tmp.substr(0, tmp.length - 1);
+            var index = tmp.lastIndexOf("_");
+            if (0 < index) {
+              var curDate = tmp.substr(index + 1, tmp.length - 1);
+              if (curDate <= 15) {
+                $("#CHK" + tmp).prop("checked", true);
+                flag = true;
+              }
+            }
+          });
+          if (flag) {
+            $("#DCMLTAPRV")[0].click();
+          } else {
+            alert("対象データがありません");
+          }
+      });
+        $("div.globalnavi")
+        .append("<input type='button' value='チェック＆確認' class='check-button' id='btn-83948'></input>");
+        $(document).on("click", "#btn-83948", function (e) {
           $("[id^=BTNDCCOR]").each(function () {
             var tmp = $(this).attr("id").substr(8);
             tmp = tmp.substr(0, tmp.length - 1);

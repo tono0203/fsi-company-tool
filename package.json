@@ -1,16 +1,23 @@
 {
   "name": "company-ext",
-  "version": "4.2.4",
+  "version": "4.2.5",
   "description": "COMPANY拡張ツール",
   "main": "index.js",
   "scripts": {
-    "build": "cd src & ..\\7za a -tzip -r ../dist/%npm_package_version%.zip",
+    "copylib-jq": "copy node_modules\\jquery\\dist\\jquery.min.js src\\js",
+    "copylib-mo": "copy node_modules\\moment\\min\\moment.min.js src\\js",
+    "copylib": "run-p copylib-jq copylib-mo",
+    "build-zip": "cd src & ..\\7za a -tzip -r ../dist/%npm_package_version%.zip",
+    "build": "run-s copylib build-zip",
     "clean": "del dist\\%npm_package_version%.zip"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jquery": "^3.4.1",
-    "moment": "^2.24.0"
+    "jquery": "^3.5.1",
+    "moment": "^2.27.0"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
   }
 }

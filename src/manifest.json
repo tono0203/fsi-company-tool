@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "COMPANYツール",
-  "description": "COMPANYの日々承認時にまとめてチェックを入れる機能",
-  "version": "4.2.4",
+  "description": "COMPANYをちょっとだけ便利にする",
+  "version": "4.2.5",
   "icons": {
     "16": "images/icon/icon_16.png",
     "48": "images/icon/icon_48.png",

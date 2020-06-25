@@ -70,6 +70,35 @@ $(document).ready(function () {
         childList: true,
       });
     }
+    // Alt+nで次へボタンクリック
+    if ($("#btnNext0")[0]) {
+      $(document).keydown(function(e) {
+        switch (e.keyCode) {
+            case 78:
+                // Key: Alt + n
+                if (e.altKey){
+                  $("#btnNext0").click();
+                }
+                break;
+        }
+      });
+    }
+    // Alt+nで申請ボタンクリック
+    if ($("#dSubmission0")[0]) {
+      $(document).keydown(function(e) {
+        switch (e.keyCode) {
+            case 78:
+                // Key: Alt + n
+                if (e.altKey){
+                  $("#dSubmission0").click();
+                }
+                break;
+        }
+      });
+    }
+    
+
+
     return;
   }
 

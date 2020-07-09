@@ -61,7 +61,14 @@ $(document).ready(function () {
     if ($("#KNMTMRNGSTD")[0]) {
       $('html').append("<input type='hidden' id='jviuh5o6y6622oHIDDEN'>");
       addCpPasteButtons();
-
+      // 未申請のときに在宅をデフォルト設定
+      chrome.storage.local.get(function (items) {
+        var zaitaku = (items.zaitaku) ? items.zaitaku : false;
+        if (zaitaku && $("span:contains('未申請')")) {
+          $('select[name="GI_COMBOBOX13_Seq0S"]').val(3);
+        }
+      });
+  
       // DOM要素の変更を監視してコピペボタンの追加をする
       var observer = new MutationObserver(function (MutationRecords, MutationObserver) {
         addCpPasteButtons();
@@ -157,9 +164,10 @@ $(document).ready(function () {
  */
 function addCpPasteButtons() {
   $(".PmPanelEntryTimeStateEachRowStyle").each(function (index) {
-    $(this).append("<button style='margin-left:10px' id='jviuh5o6y6622oXY-" + index + "' title='実績時間のコピー'>Ｃ</button>");
-    $(this).append("<button id='jviuh5o6y6622oPASTE-" + index + "' title='実績時間の貼り付け'>Ｐ</button>");
-    $(this).append("<button style='margin-left:10px' id='jviuh5o6y6622oJITSU-" + index + "' title='本日の実働時間を入力'>全</button>");
+    $(this).append("<button style='margin-left:10px;padding:0px 2px' id='jviuh5o6y6622oXY-" + index + "' title='実績時間のコピー'>Ｃ</button>");
+    $(this).append("<button style='margin-left:2px;padding:0px 2px' id='jviuh5o6y6622oPASTE-" + index + "' title='実績時間の貼り付け'>Ｐ</button>");
+    $(this).append("<button style='margin-left:10px;padding:0px 2px' id='jviuh5o6y6622oJITSU-" + index + "' title='本日の実働時間を入力'>全</button>");
+    $(this).append("<button style='margin-left:2px;padding:0px 2px' id='jviuh5o6y6622oZAN-" + index + "' title='実働時間との差異を設定'>差</button>");
     $(document).on("click", "#jviuh5o6y6622oXY-" + index, function (e) {
       var val = {
         hour: $('#PmDdEntryTimeInputWidget_' + index + 'H').val(),
@@ -183,38 +191,31 @@ function addCpPasteButtons() {
         $('#PmDdEntryTimeInputWidget_' + index + 'M').val(minute);
       }
     });
-  });
+    $(document).on("click", "#jviuh5o6y6622oZAN-" + index, function (e) {
+      // 差異なしのときはなにもしない
+      if ($('#PM_PANEL_ENTRY_MESSAGE_TBL Span#H').length == 2){
+        var hour = $('#PM_PANEL_ENTRY_MESSAGE_TBL Span#H:last').text();
+        var minute = $('#PM_PANEL_ENTRY_MESSAGE_TBL Span#M:last').text();
+        if (hour && minute) {
+          $('#PmDdEntryTimeInputWidget_' + index + 'H').val(hour);
+          $('#PmDdEntryTimeInputWidget_' + index + 'M').val(minute);
+        }
+      }
+    });
+   });
   // 在宅勤務利用
   $("#GI10").each(function () {
     if (!$("#ILKJLGGNdslkf3GI10ZT")[0]) {
-      $(this).parent().append("<button style='margin-left:10px' id='ILKJLGGNdslkf3GI10ZT' title='実行時間を全部在宅勤務にする'>終日在宅</button>");
+      $(this).parent().append("<button style='margin-left:10px' id='ILKJLGGNdslkf3GI10ZT' title='在宅時間をクリアして終日在宅にする'>終日在宅</button>");
       $(document).on("click", "#ILKJLGGNdslkf3GI10ZT", function (e) {
-        var sday = $('#KNMTMRNGSTD').val();
-        var shour = $('#KNMTMRNGSTH').val();
-        var sminute = $('#KNMTMRNGSTM').val();
-        var eday = $('#KNMTMRNGETD').val();
-        var ehour = $('#KNMTMRNGETH').val();
-        var eminute = $('#KNMTMRNGETM').val();
-        if (shour && sminute && ehour && eminute) {
-          $('select[name="GI_COMBOBOX13_Seq0S"]').val(2);
-          $('select[name="GI_TIMERANGE14_Seq0STD"]').val(sday);
-          $('input[name="GI_TIMERANGE14_Seq0STH"]').val(shour);
-          $('input[name="GI_TIMERANGE14_Seq0STM"]').val(sminute);
-          $('select[name="GI_TIMERANGE14_Seq0ETD"]').val(eday);
-          $('input[name="GI_TIMERANGE14_Seq0ETH"]').val(ehour);
-          $('input[name="GI_TIMERANGE14_Seq0ETM"]').val(eminute);
-        }
+        $('select[name="GI_COMBOBOX13_Seq0S"]').val(3);
+        $('select[name="GI_TIMERANGE14_Seq0STD"]').val('0');
+        $('input[name="GI_TIMERANGE14_Seq0STH"]').val('0');
+        $('input[name="GI_TIMERANGE14_Seq0STM"]').val('0');
+        $('select[name="GI_TIMERANGE14_Seq0ETD"]').val('0');
+        $('input[name="GI_TIMERANGE14_Seq0ETH"]').val('0');
+        $('input[name="GI_TIMERANGE14_Seq0ETM"]').val('0');
       });
-      $(this).parent().append("<button style='margin-left:10px' id='ILKJLGGNdslkf3GI10NZ' title='在宅勤務を解除する'>在宅解除</button>");
-      $(document).on("click", "#ILKJLGGNdslkf3GI10NZ", function (e) {
-          $('select[name="GI_COMBOBOX13_Seq0S"]').val(1);
-          $('select[name="GI_TIMERANGE14_Seq0STD"]').val('0');
-          $('input[name="GI_TIMERANGE14_Seq0STH"]').val('0');
-          $('input[name="GI_TIMERANGE14_Seq0STM"]').val('0');
-          $('select[name="GI_TIMERANGE14_Seq0ETD"]').val('0');
-          $('input[name="GI_TIMERANGE14_Seq0ETH"]').val('0');
-          $('input[name="GI_TIMERANGE14_Seq0ETM"]').val('0');
-    });
     }
   });
 

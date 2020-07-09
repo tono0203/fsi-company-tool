@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "COMPANYツール",
   "description": "COMPANYをちょっとだけ便利にする",
-  "version": "4.2.6",
+  "version": "4.2.7",
   "icons": {
     "16": "images/icon/icon_16.png",
     "48": "images/icon/icon_48.png",

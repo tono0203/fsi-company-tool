@@ -5,7 +5,7 @@ var meiboURLreg = /.*_office-only\/meiboDB\/.*/
 // 簡易WF URL
 var wfURLreg = /.*\/wf\/.*/
 
-$(document).ready(function () {
+$(function () {
   var href = window.location.href;
   // ---------------------------------------
   // COMPANY
@@ -50,7 +50,7 @@ $(document).ready(function () {
     if ($("#MLTSBMTAPRV")[0]) {
       $("div.globalnavi")
         .append("<input type='button' value='すべてチェック' class='check-button'></input>")
-        .bind("click", function (e) {
+        .on("click", function (e) {
           $("[id^=cbx]").each(function () {
             $(this).prop("checked", true);
           });
@@ -79,12 +79,12 @@ $(document).ready(function () {
     }
     // Alt+nで次へボタンクリック
     if ($("#btnNext0")[0]) {
-      $(document).keydown(function(e) {
-        switch (e.keyCode) {
-            case 78:
+      $(document).on('keydown', function(e) {
+        switch (e.code) {
+            case 'KeyN':
                 // Key: Alt + n
                 if (e.altKey){
-                  $("#btnNext0").click();
+                  $("#btnNext0").trigger('click');
                 }
                 break;
         }
@@ -92,20 +92,17 @@ $(document).ready(function () {
     }
     // Alt+nで申請ボタンクリック
     if ($("#dSubmission0")[0]) {
-      $(document).keydown(function(e) {
-        switch (e.keyCode) {
-            case 78:
+      $(document).on('keydown', function(e) {
+        switch (e.code) {
+            case 'KeyN':
                 // Key: Alt + n
                 if (e.altKey){
-                  $("#dSubmission0").click();
+                  $("#dSubmission0").trigger('click');
                 }
                 break;
         }
       });
     }
-    
-
-
     return;
   }
 

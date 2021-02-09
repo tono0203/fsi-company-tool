@@ -64,7 +64,7 @@ $(function () {
       // 未申請のときに在宅をデフォルト設定
       chrome.storage.local.get(function (items) {
         var zaitaku = (items.zaitaku) ? items.zaitaku : false;
-        if (zaitaku && $("span:contains('未申請')")) {
+        if (zaitaku && $("span:contains('未申請')")[0] && $("select[name='KNMCDS']")[0].value === "AA1000") {
           $('select[name="GI_COMBOBOX13_Seq0S"]').val(3);
         }
       });
